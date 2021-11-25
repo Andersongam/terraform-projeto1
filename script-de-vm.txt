@@ -1,0 +1,17 @@
+#! /bin/bash
+apt update
+apt -y install apache2
+apt -y install php
+systemctl restart apache2
+cd /var/www/html
+rm index.html
+cd ..
+apt -y install wget
+wget http://wordpress.org/latest.tar.gz
+tar -xzvf latest.tar.gz
+apt -y install rsync
+rsync -avP wordpress/ /var/www/html
+cd /var/www/html
+apt install php-mysql php-cgi php-cli php-gd -y
+systemctl restart apache2
+chown -R www-data:www-data /var/www/html
